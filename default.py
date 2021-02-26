@@ -162,6 +162,8 @@ class Dplay(object):
           response = self._getResponseJson('http://eu2-prod.disco-api.com/playback/videoPlaybackInfo/{0}'.format(video_id), True)
           if response.isSucceeded:
             url = response.body['data']['attributes']['streaming']['hls']['url']
+            # bypass of quality selection to solve audio issue
+            '''
             stream = nw.getResponse(url, headers={"User-Agent": Dplay.USER_AGENT})
             if stream.isSucceeded:
               qlySetting = nw.addon.getSetting('vid_quality')
@@ -193,6 +195,8 @@ class Dplay(object):
               i_start = url.rfind('/', 0, i_end) + 1
               old_str = url[i_start:i_end]
               result['url'] = url.replace(old_str, items[0][1])
+              '''
+            result['url'] = url
         return result
 
 
